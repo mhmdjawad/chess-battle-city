@@ -1,0 +1,25 @@
+Hello, and welcome to episode two of chess battle city in javascript.
+
+This episode I will be talking about event manager and input handling,
+so 2 new javascript classes will be joining the team, EventManager.js 
+and KeyboardAndMouse.js
+
+KeyboardAndMouse will take care of adding event listeners to the target
+among the list of events provided and will notify the EventManager
+when any of the evets occur
+EventManager will notify all subscribers to the event that was lunched
+and each of them will handle it as it want.
+
+
+
+
+
+documentation https://pdemia.com/chess-battle-city/
+repository for the current project https://github.com/mhmdjawad/chess-battle-city
+facebook page for pdemia https://www.facebook.com/pdemia
+my facebook page https://www.facebook.com/mhmdjawadzd
+my instagram https://www.instagram.com/p/CHKVXSqALen/
+my linkedin https://www.linkedin.com/in/mhmdjawadzd/
+
+Till we meet again, take care, good night.
+Thanks for watching.

@@ -1,3 +1,116 @@
+:root{
+    --pdemia-logo-dark  : #092046;
+    --pdemia-logo-light : #0db2b2;
+    --chess-white-bg : #f0d9b5;
+    --chess-black-bg : #b58863;
+
+    --chess-white-bg-dark : #f0d9b575;
+    --chess-black-bg-dark : #b5886378;
+
+    --chess-white-bg-dark2 : #f0d9b536;
+    --chess-black-bg-dark2 : #b5886330;
+
+    --cursor : #00ffdc30;
+
+    --bord-overlay : #e3ff5b75;
+}
+*{
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+html,body {
+  height: 100%;
+}
+::-webkit-scrollbar-track{
+    background-color: #0db2b2;
+    border-radius: 0px;
+}
+::-webkit-scrollbar{
+    width: 5px;
+    background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb{
+    border-radius: 0px;
+    background-image: -webkit-gradient(linear,
+    left bottom,
+    left top,
+    color-stop(0.44, rgb(9, 32, 70)),
+    color-stop(0.72, rgb(9, 32, 70)),
+    color-stop(0.86, rgb(9, 32, 70)));
+}
+
+.jumbotron{
+    background: linear-gradient(
+    var(--pdemia-logo-dark),
+    var(--pdemia-logo-light),
+    var(--pdemia-logo-dark));
+}
+
+.project-about .btn{
+    margin:5px;
+}
+.contents_container h2{
+    background : var(--pdemia-logo-dark);
+    color : var(--pdemia-logo-light);
+    padding:5px;
+    margin:0;
+}
+
+.thumbnail-project-image{
+    border:2px solid var(--pdemia-logo-dark);
+    width:100% !important;
+    padding:0px;
+    border-radius:10px 15px 0px 19px;
+    overflow:hidden;
+}
+.thumbnail-project-image img{
+    width:100%;
+
+}
+
+.pdemia-footer{
+    margin-top:4rem;
+    padding:40px 0px 30px 0px;
+    background: linear-gradient(
+    var(--pdemia-logo-light),
+    var(--pdemia-logo-dark)
+    
+    );
+}
+
+.pdemia-footer img{
+    height:200px;;
+}
+
+.pdemia-footer ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.pdemia-footer ul li{
+    font-weight:bold;
+    background : var(--pdemia-logo-dark);
+    color : var(--pdemia-logo-light);
+    padding:3px;
+    margin:3px;
+}
+.pdemia-footer ul li:hover{
+    background : var(--cursor);
+}
+.pdemia-footer .social .fa{
+    height:50px;
+    width:50px;
+    background : var(--pdemia-logo-dark);
+    color : var(--pdemia-logo-light);
+    border:2px dashed var(--pdemia-logo-light);
+    font-size:34px;
+    padding:8px 8px;
+}
+.pdemia-footer .social .fa:hover{
+    background : var(--cursor);
+}
+
 .helper{
     border:2px solid black;
     margin-top: 10rem;

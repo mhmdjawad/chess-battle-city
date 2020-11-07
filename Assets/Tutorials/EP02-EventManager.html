@@ -1,0 +1,244 @@
+<h3>Ep 02 -- Event Manager And Input</h3>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            What are events
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            event that may occur are user interactions like button clicks on keyboard 
+            or mouse move or touch that if you are on mobile
+            what we will be doing in this episode is introducing two new classes
+            EventManager.js and KeyboardAndMouse.js
+        </p>
+        <a target="_blank" href="Demo/02-a/" class="btn btn-info btn-lg "> Demo</a>
+    </div>
+</div>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            EventManager.js
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            Many of the games would allow multiple actions to be taken at the same point,
+            for that a single button click would mean several events to be fired
+            so this class would wrap out all of the subscribers to an event and let them all know
+            when an event occur so that they would take action
+        </p>
+        <h3 class="filename">Assets/Styles/Lib/EventManager.js</h3>
+        <xmp class="code code_css">
+            export default class EventManager{
+                constructor(main){
+                    this.main = main;
+                    this.subscribers = {};
+                }
+                removeAllSubscribers() {this.subscribers = {};}
+                addSubscriber(subscriber, events) {
+                    for (var i in events) {
+                        if (!this.subscribers[events[i]]) {
+                            this.subscribers[events[i]] = [];
+                        }
+                        this.subscribers[events[i]].push(subscriber);
+                    }
+                }
+                removeSubscriber(subscriber) {
+                    for (var i in this.subscribers) {
+                        for (var j in this.subscribers[i]) {
+                            if (this.subscribers[i][j] === subscriber) {
+                                this.subscribers[i].splice(j, 1);
+                            }
+                        }
+                    }
+                }
+                fireEvent(event) {
+                    var subscribers = this.subscribers[event.name];
+                    for (var i in subscribers) {
+                        if(subscribers[i].notify) subscribers[i].notify(event);
+                    }
+                }
+            }
+        </xmp>
+    </div>
+</div>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            KeyboardAndMouse.js
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            this class does a great deal in making the controls for our game
+            using this class it become easy to attach an event and control what happens when it occur
+        </p>
+        <h3 class="filename">Assets/Styles/Lib/KeyboardAndMouse.js</h3>
+        <xmp class="code code_css">
+            export default class KeyboardAndMouse{ 
+                constructor(target,eventManager,eventListeners,eventOnLunch = false){
+                    KeyboardAndMouse[target] = this;
+                    this.eventListeners = eventListeners;
+                    this.target = target;
+                    this.eventManager = eventManager;
+                    this.events = [];
+                    this.keys = {};
+                    this.listen();
+                    this.eventOnLunch = eventOnLunch;
+                }
+                listen() {
+                    [...this.eventListeners].forEach(eventName => {
+                        this.target.addEventListener(eventName, event => {
+                            // console.log("event",event);
+                            if(this.eventOnLunch){
+                                this.eventManager.fireEvent({ 
+                                    name    : eventName,
+                                    event   : event
+                                });
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            else if(KeyboardAndMouse.Event.KEY.includes(eventName)){
+                                this.events.push({ 
+                                    name    : eventName,
+                                    event   : event.which
+                                });
+                            }
+                            else if(eventName === KeyboardAndMouse.Event.CONTEXT){
+                                //event.preventDefault();
+                            }
+                            else if(eventName === KeyboardAndMouse.Event.MOUSEMOVE){
+                                //event.preventDefault();
+                            }
+                            else{
+                                this.events.push({ 
+                                    name    : eventName,
+                                    event   : event
+                                });
+                            }
+                        });
+                    });
+                }
+                fireEvents() {
+                    this.events.forEach(function (event) {
+                        this.eventManager.fireEvent(event);
+                    }, this);
+                    this.events = [];
+                }
+            }
+        </xmp>
+    </div>
+</div>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            KeyboardAndMouse Events
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            a list of events that may occur on a browser, some of them on mobile only
+            and some are on windows only.
+        </p>
+        <h3 class="filename">Assets/Styles/Lib/KeyboardAndMouse.js</h3>
+        <xmp class="code code_css">
+            KeyboardAndMouse.Event = {
+                //Keyboard events
+                KEYDOWN     : 'keydown',        //ANY key is pressed
+                KEYUP       : 'keyup',          //ANY key is released
+                KEYPRESS    : 'keypress',       //ANY key (except Shift, Fn, or CapsLock) is in a pressed position (fired continuously).
+                MOUSEDOWN   : 'mousedown',      //MOUSE LEFT PRESSED
+                MOUSEMOVE   : 'mousemove',      //MOUSE MOVED
+                CONTEXT     : 'contextmenu',    //MOUSE RIGHT PRESSED
+                WHEEL       : 'wheel',          //MOUSE WHEEL
+                TOUCHSTART  : 'touchstart',
+                TOUCHEND    : 'touchend',
+                TOUCHCANCEL : 'touchcancel',
+                TOUCHMOVE   : 'touchmove',
+                CLICK   : 'click',
+                TOUCHORCLICK : ['click','touchstart'],
+                TOUCH : ['click','touchstart','touchend','touchcancel','touchmove'],
+                KEY : ['keydown','keyup','keypress'],
+                MOUSE : ['mousedown','mousemove','wheel','contextmenu'],
+                ALL : ['keydown','keyup','keypress','mousedown','mousemove','wheel','contextmenu','touchstart','touchend','touchcancel','touchmove']
+            }
+        </xmp>
+    </div>
+</div>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            updated main.js
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            updated main.js
+        </p>
+        <h3 class="filename">Assets/Styles/main.js</h3>
+        <xmp class="code code_css">
+            import Timer from './Lib/Timer.js';
+            import EventManager from './Lib/EventManager.js';
+            import KeyboardAndMouse from './Lib/KeyboardAndMouse.js';
+            class Main{
+                constructor(container){
+                    this.canvas = document.createElement('canvas');
+                    this.canvas.width = 16 * 25;
+                    this.canvas.height = 16 * 25;
+                    $(container).html(this.canvas);
+                    this.ctx = this.canvas.getContext('2d');
+                    this.drawLoading(this.ctx);
+
+                    this.EventManager = new EventManager();
+
+                    this.KeyboardAndMouse = new KeyboardAndMouse(window,this.EventManager,[
+                        ...KeyboardAndMouse.Event.ALL
+                    ],true);
+
+
+                    this.EventManager.addSubscriber(this,[
+                        ...KeyboardAndMouse.Event.ALL
+                    ]);
+
+                    this.Timer = new Timer(1/20, this, true);
+                    this.frames = 0;
+                }
+                drawLoading(ctx){
+                    ctx.fillStyle = "#000000";
+                    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillText("LOADING ",ctx.canvas.width / 2, ctx.canvas.height / 2);
+                }
+                update(time){
+                    this.frames++;
+                    this.ctx.fillStyle = "#000000";
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.ctx.fillStyle = "#ffffff";
+                    this.ctx.fillText("Time since we start  " + time, 50,50);
+                    this.ctx.fillText("Frames since we start  " + this.frames, 50,80);
+                }
+
+                notify(event){
+                    console.log("event " , event);
+                }
+            }
+            window.Main = Main;
+        </xmp>
+    </div>
+</div>

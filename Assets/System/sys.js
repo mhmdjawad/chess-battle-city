@@ -7,6 +7,7 @@ class SYS{
         return [
             "EP00-Introduction.html",
             "EP01-SetUpAndTimer.html",
+            "EP02-EventManager.html"
         ];
     }
     static initializeSelectorWithTutorials(selector){

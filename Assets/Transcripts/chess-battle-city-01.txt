@@ -1,0 +1,70 @@
+Hello, and welcome to episode one of chess battle city in javascript.
+
+In this episode, I will first show my the achievement of today, which is the bullets!
+Then my second child of today is this page, here I will be adding each and every part
+we will be discussing though out this tutorial, and you can check the code and notes
+whenever you need.
+
+So I have added a bit about episode 00 which just few stuff to fill blanks,
+about the game, youtube tutorial link that I'll be updating after this video
+
+but what we will go through today is Episode 01 which is about setting up files
+and introducing Timer.Js, which is a small javascript class that will make our canvas alive.
+
+so first things first we need to make a directory for our project and add the following to it
+an html file index.html and a folder Assets.
+
+Assets folder will contain all of our assets, image, scripts, styles, and later on json files or any other stuff.
+
+we will start at the index.html page, we will be adding our files in the head
+the main.css and main.js that exist in our project and plus jquery because it would help
+
+at the body of the page we will need a container to place the canvas in it
+and a callback to the main where we will call constructor of our main
+
+as you can see we are loading main as a module type, 
+this is because every other js file will be imported in the main js
+
+I will go though this but I guess being fast here won't do harm
+
+we create a canvas element, set its width and height as we please
+add this canvas to the container in html
+
+to draw stuff on the canvas we will need to get the 2d context of it
+canvas also have a 3d context in webgl that you can try, search for threejs and check it out
+I have tried it for a couple day and made this floating cube with logo on its sides
+now back to our 2d game...
+for this part we will just draw text Loading in the center-ish of the canvas
+
+we can do that through these lines of code..
+we fill the canvas in black
+then we fill text on the center of height of canvas and center of width
+now that will indicate the top corner where we will draw but that does not matter now
+
+styling is, well, styling... 
+this snippet of css will make the canvas centered and a background color set to body
+
+now that we have our canvas and we know how to draw on it we need to make it more alive
+as in we need to animate it, so I'll get to the most important topic of this episode 
+the Timer.js, this is a class that will help us making the animation.
+I have set it up to take an object as parameter and a frame rate, also a boolean to automate it at start
+
+the object calling it should have update method that could take one parameter
+which is the time passed since we have started the timer...
+
+so here is an example that I have updated the previous main js to show how many seconds have passed
+I also added a counter to tell how many times the main have been updated
+the thing is, Timer js ensure us to make as many frames as we tell it in frame rate,
+so when we want the game to go fast we can toy with the frame rate.
+
+this would be all for this episode,
+
+documentation https://pdemia.com/chess-battle-city/
+repository for the current project https://github.com/mhmdjawad/chess-battle-city
+facebook page for pdemia https://www.facebook.com/pdemia
+my facebook page https://www.facebook.com/mhmdjawadzd
+my instagram https://www.instagram.com/p/CHKVXSqALen/
+my linkedin https://www.linkedin.com/in/mhmdjawadzd/
+
+Till we meet again, take care, good night.
+Thanks for watching.
