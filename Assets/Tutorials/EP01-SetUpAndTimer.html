@@ -1,0 +1,224 @@
+
+
+<h3>Ep 01 -- Setup Files & Timer.Js</h3>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Folder Tree
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        
+        <p><span style="font-size:16px">A very essential task in coding is to keep things tidy enough to easy your access to them<br />
+        Here I will suggest one of the possible way to sort out your Files</span></p>
+        <p><span style="font-size:16px">start at the root of your project you will need the following, an index html page and one folder that will contain your assets</span></p>
+        <ul>
+            <li><span style="font-size:16px"><span style="color:#c0392b"><strong>index.html</strong></span></span></li>
+            <li><span style="font-size:16px"><span style="color:#f39c12"><strong>Assets</strong></span></span></li>
+        </ul>
+        <p><span style="font-size:16px">following that the assets folder would contain set of folders that you will need though your project, which are</span></p>
+        <ul>
+            <li><span style="font-size:16px"><strong><span style="color:#f39c12">Images</span></strong></span></li>
+            <li><span style="font-size:16px"><strong><span style="color:#f39c12">Styles</span></strong></span></li>
+            <li><span style="font-size:16px"><strong><span style="color:#f39c12">Scripts</span></strong></span></li>
+        </ul>
+        <p><span style="font-size:16px">you may need to add more folders but as for a setup these would do the trick, a forecast for folders to add are (json, sound, html, ...)</span></p>
+        
+        <p><span style="font-size:16px">images folder may be also devided into subfolders depending on what you see fit, for me I rather split them by their type, as such, I will have folder for png, gif, psd, jpg, and so on..</span></p>
+        
+        <p><span style="font-size:16px">styles would contain the css sheets, mainly, and may add fonts there for convint access by the css in subfolder there, as I expect no one else would be using these fonts </span></p>
+        
+        <p><span style="font-size:16px">last folder is the scripts, you will have subfolders there as you may find later that it will make things easier, the ones that are loaded though html can be put at the root of this folder and the rest can be separated to other folders.&nbsp;</span></p>
+    </div>
+</div>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Html file, loading main js and main css
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        
+        <h3>Index.html</h3>
+        <xmp class="code code_html">
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Chess Battle City Demo</title>
+                <link rel="stylesheet" href="Assets/Styles/main.css">
+                <script src="../../Assets/Libraries/JQuery/jquery-3.4.0.min.js"></script>
+                <script src="Assets/Scripts/main.js" type="module"></script>
+            </head>
+            <body>
+                <div class="canvas_container"></div>
+                <script>
+                    $(document).ready(function(){
+                        Main.game = new Main(".canvas_container");
+                    });
+                </script>
+            </body>
+            </html>
+        </xmp>
+        <h3 class="filename">Assets/Scripts/main.js</h3>
+        <xmp class="code code_js">
+            class Main{
+                constructor(container){
+                    this.canvas = document.createElement('canvas');
+                    this.canvas.width = 16 * 25;
+                    this.canvas.height = 16 * 25;
+                    $(container).html(this.canvas);
+                    this.ctx = this.canvas.getContext('2d');
+                    this.drawLoading(this.ctx);
+                }
+                drawLoading(ctx){
+                    ctx.fillStyle = "#000000";
+                    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillText("LOADING ",ctx.canvas.width / 2, ctx.canvas.height / 2);
+                }
+            }
+            window.Main = Main;
+        </xmp>
+        <h3 class="filename">Assets/Styles/main.css</h3>
+        <xmp class="code code_css">
+            *{
+                border-collapse: collapse;
+                box-sizing: border-box;
+            }
+            html,body{
+                height:100%;
+                padding: 0;
+                margin: 0;
+                width:100vw;
+                text-align:center;
+                background: #00072c;
+            }
+        </xmp>
+        <h3>Result</h3>
+        <a href="Demo/01-a/" class="btn btn-info">Demo 01-a</a>
+        <img src="Assets/Images/EP01-001.png" alt="">
+
+    </div>
+</div>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Game Loop and Animation frames
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            In order to make things moving you would need to update the display on the canvas, <br>
+            what you decide as frame rate per second is what will be used to determin how slow <br>
+            or how fast things will go in your game.
+        </p>
+        <p>
+            At this point I will introduce this class called Timer
+        </p>
+        <h3 class="filename">Assets/Styles/Lib/Timer.js</h3>
+        <xmp class="code code_css">
+            export default class Timer {
+                constructor(deltaTime = 1/60, ctrl, autostart=false) {
+                    this.accumulatedTime = 0;
+                    this.lastTime = null;
+                    this.deltaTime = deltaTime;
+                    this.ctrl = ctrl;
+                    if(autostart) this.start();
+                    this.isPaused = this.isStoped = false;
+                }
+                fireOnce(){
+                    this.queue();
+                    this.isStoped = true;
+                }
+                updateProxy(time){
+                    if (this.lastTime) {
+                        this.accumulatedTime += (time - this.lastTime) / 1000 ;
+                        if (this.accumulatedTime > 1) {
+                            this.accumulatedTime = 1;
+                        }
+                        while (this.accumulatedTime > this.deltaTime) {
+                            this.ctrl.update(Math.floor(time/1000));    //provide time in seconds passed
+                            this.accumulatedTime -= this.deltaTime;
+                            break;
+                        }
+                    }
+                    this.lastTime = time;
+                    if(!this.isStoped){
+                        this.queue();
+                    }
+                }
+                togglePause(){
+                    this.isPaused = !this.isPaused;
+                }
+                queue() {
+                    requestAnimationFrame((t) => {
+                        this.updateProxy(t);
+                    })
+                }
+                start() {
+                    this.isStoped = false;
+                    this.queue();
+                }
+                stop(){this.isStoped = true;}
+            }
+        </xmp>
+        <p>
+            what it does is enable any object it takes as ctrl parameter to file its update function 
+            as many times as the frame rate is set
+        </p>
+        <p>so when we come to update our main js file to</p>
+        <h3 class="filename">Assets/Scripts/main.js</h3>
+        <xmp class="code code_js">
+            import Timer from './Lib/Timer.js';
+            class Main{
+                constructor(container){
+                    this.canvas = document.createElement('canvas');
+                    this.canvas.width = 16 * 25;
+                    this.canvas.height = 16 * 25;
+                    $(container).html(this.canvas);
+                    this.ctx = this.canvas.getContext('2d');
+                    this.drawLoading(this.ctx);
+                    this.Timer = new Timer(1/20, this, true);
+                    this.frames = 0;
+                }
+                drawLoading(ctx){
+                    ctx.fillStyle = "#000000";
+                    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillText("LOADING ",ctx.canvas.width / 2, ctx.canvas.height / 2);
+                }
+                update(time){
+                    this.frames++;
+                    this.ctx.fillStyle = "#000000";
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.ctx.fillStyle = "#ffffff";
+                    this.ctx.fillText("Time since we start  " + time, 50,50);
+                    this.ctx.fillText("Frames since we start  " + this.frames, 50,80);
+                }
+            }
+            window.Main = Main;
+        </xmp>
+        <h3>Result</h3>
+        <a href="Demo/01-b/" class="btn btn-info">Demo 01-b</a>
+        <p>
+            the update code will print two lines, how many seconds have passed since the start <br>
+            and how many frames were updated <br>
+            the timer ensures that we are updating as many times as are set in the frame rate as per second <br>
+        </p>
+        <img src="Assets/Images/EP01-002.png" alt="">
+        <hr>
+        <p>and after a while</p>
+        <img src="Assets/Images/EP01-003.png" alt="">
+    </div>
+</div>

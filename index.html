@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mhmd Jawad | Chess Battle City</title>
+    <link rel="stylesheet" href="../Assets/Libraries/Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Assets/Libraries/FontAwesome/fa.css">
+    <script src="../Assets/Libraries/JQuery/jquery-3.4.0.min.js"></script>
+    <script src="../Assets/Libraries/Bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../Assets/System/web.css">
+    <link rel="stylesheet" href="Assets/System/web.css">
+    <script src="Assets/System/sys.js"></script>
+    <script src="//cdn.ckeditor.com/4.11.3/full/ckeditor.js"></script>
+</head>
+<body>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Chess Battle City</h1>
+        </div>
+    </div>
+    <div class="container documentation_container">
+        <div class="documentation_select_container">
+            <div class="row">
+                <div class="col-sm-2">
+                    Tutorial
+                </div>
+                <div class="col-sm-6">
+                    <select to=".documentation_response" id="documentation_select" class="form-control"></select>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-success"> Go </button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="documentation_response">
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            SYS.initializeSelectorWithTutorials("#documentation_select");
+        });
+    </script>
+
+
+
+    <div class="container helper">
+        <h4>Helper for making html contents 
+            <button class="btn" onclick="$('.ckeditorContainer').toggle();"><i class="fa fa-eye"></i></button>
+        </h4>
+        <div class="ckeditorContainer" style = "display:none">
+            <textarea class="form-control" name="helper" ></textarea>
+            <script>CKEDITOR.replace("helper");</script>
+        </div>
+    </div>
+    <footer class="pdemia-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <img src="../Assets/Images/logo.png" alt="pdemia-logo">
+                </div>
+                <div class="col-sm-4">
+                    <h5>Contact Information</h5>
+                    <ul class="contact-info-list">
+                        <li>mohammad0jawad@gmail.com</li>
+                        <li>mjzd00@gmail.com</li>
+                        <li>+96179118135</li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 social">
+                    <h5>Social</h5>
+                    <a class ="social-ico" href="https://www.facebook.com/pdemia/"> <i class="fa fa-facebook"></i> </a>
+                    <a class ="social-ico" href="https://www.facebook.com/mhmdjawadzd"> <i class="fa fa-facebook"></i> </a>
+                    <a class ="social-ico" href="https://www.instagram.com/p/CHKVXSqALen/"> <i class="fa fa-instagram"></i> </a>
+                    <a class ="social-ico" href="https://www.linkedin.com/in/mhmdjawadzd/"> <i class="fa fa-linkedin"></i> </a>
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

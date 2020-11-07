@@ -1,0 +1,29 @@
+.helper{
+    border:2px solid black;
+    margin-top: 10rem;
+}
+
+.documentation_container{
+    min-height:600px;
+}
+
+
+.part_container{
+    border:1px solid black;
+    margin-top:15px;
+/*     padding:0px; */
+}
+
+.part_container .part_header{
+    font-weight:bold;
+    background:black;
+    color:#fff;
+}
+.part_body{
+/*     font-size:2rem; */
+}
+
+.code{
+    background:#696969;
+    color:#fff;
+}
