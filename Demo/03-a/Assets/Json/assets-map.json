@@ -1,0 +1,29 @@
+{
+    "font":{
+        "size" : 8,
+        "elements" : [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", ".", ":", "-"],
+        "x": 0,
+        "y": 0
+    },
+    "tank" : {
+        "size" : 32,
+        "elements" : ["tank-1-1-1","tank-1-1-2","tank-2-1-1","tank-2-1-2",
+            "tank-3-1-1","tank-3-1-2","tank-3-2-1","tank-3-2-2"],
+        "x" : 0,
+        "y" : 8
+    },
+    "tile" : {
+        "size" : 16,
+        "elements" : ["brick","steel","blue","aqua","tree"],
+        "x" : 0,
+        "y" : 40
+    },
+    "bullet" : {
+        "size" : 8,
+        "elements" : ["bullet-1","bullet-2","bullet-3"],
+        "x" : 0,
+        "y" : 56
+    }
+}

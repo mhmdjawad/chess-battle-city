@@ -132,11 +132,7 @@ html,body {
     background:black;
     color:#fff;
 }
-.part_body{
-/*     font-size:2rem; */
-}
-
-.code{
+xmp{
     background:#696969;
     color:#fff;
 }

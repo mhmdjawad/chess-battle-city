@@ -1,0 +1,451 @@
+<h3>Ep 03 -- Assets Manager</h3>
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Assets To Load before we start the game
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            There are a few types of assets that we may want to load to our project <br>
+            Like images, and sound. We may also need some json files that will help us map the images.<br>
+            let us take the image below as our assets <br>
+            <img src="Assets/Images/EP03-001.png" alt="assets-image"> 
+            <hr>
+            first row (8px height) contain the numbers and letters in pixel font,
+            we can use these to print on our screen the text we want.
+            and I actually have a nice Idea about using these to make a letter out of bricks<br>
+            row 2, (32px height) contain the tanks, and water tile, <br>
+            row 6, (16x height) contain the brick wall, steel wall, trees, and 2 colored brick walls<br>
+            row 8, (8px height) contain 3 types of bullets that a tank will fire.. <br>
+            this image is a screen capture from photoshop, the actual png image is:<br>
+            <img src="Demo/03-a/Assets/Images/assets.png" alt="assets-image"> 
+        </p>
+
+        <h4>Demo 03-a <a class="btn btn-info" href="Demo/03-a/index.html" target="_blank"> open </a> </h4>
+        <iframe src="Demo/03-a/index.html" width="100%" height="300px" frameborder="0"></iframe>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            How to load an image
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            loading an image can be done in several ways, 
+            <ul>
+                <li>using img tag in html with src to actual image</li>
+                <li>using img tag in html with src to base64 string representing an image</li>
+                <li>using javascript</li>
+            </ul>
+            <xmp class="code code_css">
+                <img src="Demo/03-a/Assets/Images/assets.png" alt="assets-image"> 
+            </xmp>
+            we can load the image using javascript
+            <xmp class="code code_css">
+                <script>
+                    const image = new Image();
+                    image.addEventListener('load', () => {
+                        //handle loaded image
+                    });
+                    image.src = "Demo/03-a/Assets/Images/assets.png";
+                </script>
+            </xmp>
+            we may also add a handler when we fail to load an images
+            <xmp>
+                <script>
+                    image.addEventListener('error', () => {
+                        //handle error
+                    });
+                </script>
+            </xmp>
+            a good way is to make a function that return a promise
+            <xmp>
+                <script>
+                    function loadImage(url) {
+                        const promise = new Promise((resolve, reject) => {
+                            const image = new Image();
+                            image.addEventListener('load', () => {
+                                resolve(image);
+                            });
+                            image.addEventListener('error', () => {
+                                reject();
+                            });
+                            image.src = url;
+                        });
+                        return promise;
+                    }
+                </script>
+            </xmp>
+            using it would be as follows
+            <xmp>
+                <script>
+                    loadImage("Assets/Images/assets.png").then(img=>{
+                        console.log(img);
+                    },()=>{
+                        console.log("could not load image");
+                    });
+                </script>
+            </xmp>
+        </p>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Loading json
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>Loading json is very simple, we also have serveral methods, a very nice on is usig fetch</p>
+        <p>fetch will take a url as parameter and return a promise,
+            if we need to get the josn in it we will use .json, which is also a promise
+        </p>
+        <p>so we will create an async function that will make both of these, so we would have</p>
+        <xmp>
+            <script>
+                async function loadJSON(url) {
+                    const r = await fetch(url);
+                    return await r.json();
+                }
+            </script>
+        </xmp>
+        <p>let us make a map for the above image to know where and what to cut,
+
+            I will make a new folder under Assets named Json and it in will make file
+            assets-map.json
+        </p>
+        <xmp>
+            {
+                "font":{
+                    "size" : 8,
+                    "elements" : [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", 
+                        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
+                        "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", ".", ":", "-"],
+                    "x": 0,
+                    "y": 0
+                },
+                "tank" : {
+                    "size" : 32,
+                    "elements" : ["tank-1-1-1","tank-1-1-2","tank-2-1-1","tank-2-1-2",
+                        "tank-3-1-1","tank-3-1-2","tank-3-2-1","tank-3-2-2"],
+                    "x" : 0,
+                    "y" : 8
+                },
+                "tile" : {
+                    "size" : 16,
+                    "elements" : ["brick","steel","blue","aqua","tree"],
+                    "x" : 0,
+                    "y" : 40
+                },
+                "bullet" : {
+                    "size" : 8,
+                    "elements" : ["bullet-1","bullet-2","bullet-3"],
+                    "x" : 0,
+                    "y" : 56
+                }
+            }
+        </xmp>
+
+        so when we want to load the json through the url we need to be in an async function, or use then
+        <xmp>
+            <script>
+                loadJSON("Assets/Json/assets-map.json").then(json=>{
+                    console.log(json);
+                });
+            </script>
+        </xmp>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Loading Audio
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>Loading audio files can be done as such</p>
+        <xmp>
+            <script>
+                var sound = new Audio("Assets/Sound/stage_start.ogg");
+            </script>
+        </xmp>
+        <p>and we can play a sound using .play() </p>
+        <xmp>
+            <script>
+                sound.play();
+            </script>
+        </xmp>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            GLOBAL.JS
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>Ok so how about we can have access to our assets from all the files, 
+            let us know where each is first</p>
+        <p>we will create a new js file in the root of the scripts folder in Assets</p>
+        <p>we will store all the config that we want and include it in the index.html, before main.js</p>
+        
+        <h4>GLOBAL.js</h4>
+        <xmp>
+            let GLOBAL = {};
+            GLOBAL.PROJECT_ASSETS = "Assets/";
+            GLOBAL.JSON = {
+                assets : GLOBAL.PROJECT_ASSETS+'json/assets-map.json',
+            }
+            GLOBAL.SOUNDS = {
+                stage_start:      GLOBAL.PROJECT_ASSETS + 'sound/stage_start.ogg',
+            }
+            GLOBAL.IMAGES = {
+                assets : GLOBAL.PROJECT_ASSETS+'Images/assets.png'
+            };
+            GLOBAL.ENTITY = {
+                "assets" : {
+                    "name"  : "assets",
+                    "img"   : GLOBAL.IMAGES.assets, 
+                    "map"   : GLOBAL.JSON.assets,
+                }
+            }
+            GLOBAL.Assets = {
+                "loaded" : 0,
+                "count" : 3,
+                "images_url" : [
+                    GLOBAL.IMAGES.assets
+                ],
+                "json_url" : [
+                    GLOBAL.JSON.assets
+                ],
+                "sounds_url" : [
+                    GLOBAL.SOUNDS.stage_start
+                ],
+                "images"    :{},
+                "json"      :{},
+                "sounds"    :{}
+            }
+        </xmp>
+        
+        here we will have all the static links and configuration for our project <br>
+        GLOBAL.Assets will be used by the other classes to have access to its componenets, <br>
+        like images and sounds  </br>
+        GLOBAL.ENTITY now contain assets, but actually it would contain several stuff in it</br>
+        but since I have made one image that contain several types instead of making on for each,</br>
+        we will only be using this... we may refactor later.</br>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            AssetsManager.JS
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>AssetsManager is a class that wrap the loaders mentioned earlier plus these static methods</p>
+        <xmp>
+            <script>
+                function loadAssets(){
+                    if(AssetsManager.LOADED){return;}
+                    if(AssetsManager.ISLOADING){return;}
+                    AssetsManager.ISLOADING = true;
+                    [...GLOBAL.Assets.images_url].forEach(url=>{
+                        const image = new Image();
+                        image.addEventListener('load', () => {
+                            GLOBAL.Assets.images[url] = image;
+                            GLOBAL.Assets.loaded++;
+                        });
+                        image.addEventListener('error', () => {
+                            GLOBAL.Assets.images[url] = null;
+                            GLOBAL.Assets.loaded++;
+                        });
+                        image.src = url;
+                    });
+                    [...GLOBAL.Assets.json_url].forEach(url=>{
+                        fetch(url).then(r=> r.json()).then(json=>{
+                            GLOBAL.Assets.json[url] = json;
+                            GLOBAL.Assets.loaded++;
+                        });
+                        
+                    });
+                    [...GLOBAL.Assets.sounds_url].forEach(url=>{
+                        var sound = new Audio(url);
+                        GLOBAL.Assets.sounds[url] = sound;
+                        GLOBAL.Assets.loaded++;
+                    });
+                    AssetsManager.ISLOADING = false;
+                    AssetsManager.LOADED = true;
+                }
+                function getLoadStatus(){
+                    return Math.floor((GLOBAL.Assets.loaded / GLOBAL.Assets.count) * 100);
+                }
+            </script>
+            
+        </xmp>
+        <h4>the full AssetsManager.js</h4>
+        <xmp>
+            <script>
+                export default class AssetsManager{
+                    static loadImage(url) {
+                        const promise = new Promise((resolve, reject) => {
+                            const image = new Image();
+                            image.addEventListener('load', () => {
+                                resolve(image);
+                            });
+                            image.addEventListener('error', () => {
+                                reject();
+                            });
+                            image.src = url;
+                        });
+                        return promise;
+                    }
+                    static async loadJSON(url) {
+                        const r = await fetch(url);
+                        return await r.json();
+                    }
+                    static async loadAssets(){
+                        if(AssetsManager.LOADED){return;}
+                        if(AssetsManager.ISLOADING){return;}
+                        AssetsManager.ISLOADING = true;
+                        [...GLOBAL.Assets.images_url].forEach(url=>{
+                            const image = new Image();
+                            image.addEventListener('load', () => {
+                                GLOBAL.Assets.images[url] = image;
+                                GLOBAL.Assets.loaded++;
+                            });
+                            image.addEventListener('error', () => {
+                                GLOBAL.Assets.images[url] = null;
+                                GLOBAL.Assets.loaded++;
+                            });
+                            image.src = url;
+                        });
+                        [...GLOBAL.Assets.json_url].forEach(url=>{
+                            fetch(url).then(r=> r.json()).then(json=>{
+                                GLOBAL.Assets.json[url] = json;
+                                GLOBAL.Assets.loaded++;
+                            });
+                            
+                        });
+                        [...GLOBAL.Assets.sounds_url].forEach(url=>{
+                            var sound = new Audio(url);
+                            GLOBAL.Assets.sounds[url] = sound;
+                            GLOBAL.Assets.loaded++;
+                        });
+                        AssetsManager.ISLOADING = false;
+                        AssetsManager.LOADED = true;
+                    }
+                    static getLoadStatus(){
+                        return Math.floor((GLOBAL.Assets.loaded / GLOBAL.Assets.count) * 100);
+                    }
+                }
+            </script>
+        </xmp>
+        <p>when we start the game, we will need these to be loaded from the start</p>
+        <p>and we can get percentage of loaded images by the getLoadStatus</p>
+        <p>so if we want to use this in our demo, we will add these</p>
+        <h4> in index.html</h4>
+        <xmp><script src="Assets/Scripts/GLOBAL.js"></script></xmp>
+        <h4> in main.js</h4>
+        <xmp>
+            <script>
+                import AssetsManager from './Lib/AssetsManager.js';
+                //in constructor or start method
+                AssetsManager.loadAssets();
+                //in our update print on canvas the loaded percentage
+                ctx.fillText("Loaded  " + AssetsManager.getLoadStatus() + "%" , 0,64);
+            </script>
+        </xmp>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Complete new Main.js
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <xmp>
+            <script>
+                import Timer from './Lib/Timer.js';
+                import EventManager from './Lib/EventManager.js';
+                import KeyboardAndMouse from './Lib/KeyboardAndMouse.js';
+                import AssetsManager from './Lib/AssetsManager.js';
+                class Main{
+                    constructor(container){
+                        this.canvas = document.createElement('canvas');
+                        this.canvas.width = 16 * 15;
+                        this.canvas.height = 16 * 15;
+                        $(container).html(this.canvas);
+                        this.ctx = this.canvas.getContext('2d');
+                        this.drawLoading(this.ctx);
+                        this.EventManager = new EventManager();
+                        this.KeyboardAndMouse = new KeyboardAndMouse(window,this.EventManager,[
+                            ...KeyboardAndMouse.Event.KEY
+                        ],true);
+                        this.EventManager.addSubscriber(this,[
+                            ...KeyboardAndMouse.Event.KEY
+                        ]);
+                        this.Timer = new Timer(1/20, this, true);
+                        this.frames = 0;
+                        this.start();
+                    }
+                    async start(){
+                        AssetsManager.loadAssets();
+                    }
+                    drawLoading(ctx){
+                        ctx.fillStyle = "#000000";
+                        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                        ctx.fillStyle = "#ffffff";
+                        ctx.fillText("LOADING ",ctx.canvas.width / 2, ctx.canvas.height / 2);
+                    }
+                    drawCurrentTime(ctx,time){
+                        this.frames++;
+                        ctx.fillStyle = "#000000";
+                        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                        ctx.fillStyle = "#ffffff";
+                        ctx.fillText("Time since we start  " + time, 0,16);
+                        ctx.fillText("Frames since we start  " + this.frames, 0,32);
+                        ctx.fillText("Loaded  " + AssetsManager.getLoadStatus() + "%" , 0,64);
+                    }
+                    update(time){
+                        this.drawCurrentTime(this.ctx,time);
+                    }
+                    notify(event){
+                        console.log("event " , event);
+                    }
+                }
+                window.Main = Main;
+            </script>
+        </xmp>
+    </div>
+</div>
