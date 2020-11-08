@@ -1,0 +1,27 @@
+Chess Battle City tutorial Episode 4 [Scenes]
+
+introducing scene manager, loading scene, main menu scene
+with a cute animation a closing curtin for the main menu
+
+EP 04 https://youtu.be/XTOALN1clo8 Scenes
+
+check demo and documentation about it at
+https://pdemia.com/chess-battle-city
+Check the code at
+https://github.com/mhmdjawad/chess-battle-city
+
+List of all episodes
+
+EP 00 https://youtu.be/kq8HtOJNfrE Introduction
+
+EP 01 https://youtu.be/QOMM8ke_ccU Timer
+
+EP 02 https://youtu.be/mRZYxZxmwBk Events
+
+EP 03 https://youtu.be/UbmQhJILhgM Assets
+
+EP 04 https://youtu.be/XTOALN1clo8 Scenes
+
+hope you enjoy. have a nice day
+
+#pdemia #chess_battle_city #dev #game_dev #javascript #the_humble_learner

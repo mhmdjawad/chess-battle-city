@@ -1,4 +1,19 @@
 <h3>Ep 04 -- Scenes</h3>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="y" >
+            <i class="fa fa-arrow-right"></i>
+        </a>
+        <span class="part-header-title">
+            Cover
+        </span>
+    </div>
+    <div class="part_body" style="text-align:center">
+        <img src="Assets/Images/cover-04.png" alt="">
+    </div>
+</div>
+
 <div class="container part_container">
     <div class="part_header">
         <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
@@ -17,10 +32,9 @@
             a game scene, sandbox scene, how to play scene...<br>
         </p>
         <h4>Demo 04-a <a class="btn btn-info" href="Demo/04-a/index.html" target="_blank"> open </a> </h4>
-        <iframe src="Demo/04-a/index.html" width="100%" height="300px" frameborder="0"></iframe>
+        <iframe src="Demo/04-a/index.html" resize=resize width="100%" height="350px" frameborder="0"></iframe>
     </div>
 </div>
-
 
 <div class="container part_container">
     <div class="part_header">
@@ -34,7 +48,239 @@
     <div class="part_body" style="display: none;">
         <xmp>
             <script>
-                
+                import SceneLoading from './SceneLoading.js';
+                import SceneMainMenu from './SceneMainMenu.js';
+                export default class SceneManager{
+                    constructor(eventManager,main) {
+                        this.eventManager = eventManager;
+                        this.main = main;
+                        this.scene = null;
+                        this.toLoading();
+                    }
+                    update(time) {
+                        if(this.scene != null){
+                            this.scene.update(time);
+                        }
+                    }
+                    draw(ctx) {
+                        if(this.scene != null){
+                            this.scene.draw(ctx);
+                        }
+                    }
+                    toLoading() {
+                        this.eventManager.removeAllSubscribers();
+                        this.scene = new SceneLoading(this);
+                    }
+                    toMainMenu() {
+                        this.eventManager.removeAllSubscribers();
+                        this.scene = new SceneMainMenu(this);
+                    }
+                    }
+            </script>
+        </xmp>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Adding Scene Manager in Main
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <xmp>
+            <script>
+                import Timer from './Lib/Timer.js';
+                import EventManager from './Lib/EventManager.js';
+                import KeyboardAndMouse from './Lib/KeyboardAndMouse.js';
+                import AssetsManager from './Lib/AssetsManager.js';
+                import SceneManager from './Lib/SceneManager.js';
+                class Main{
+                    constructor(container){
+                        this.canvas = document.createElement('canvas');
+                        this.canvas.width = GLOBAL.CANVAS.w;
+                        this.canvas.height = GLOBAL.CANVAS.h;
+                        $(container).html(this.canvas);
+                        this.ctx = this.canvas.getContext('2d');
+                        this.ctx.font = GLOBAL.CANVAS.font;
+                        this.EventManager = new EventManager(this);
+                        this.KeyboardAndMouse = new KeyboardAndMouse(window,this.EventManager,[
+                            ...KeyboardAndMouse.Event.ALL
+                        ], false);
+                        this.SceneManager = new SceneManager(this.EventManager,this);
+                        this.Timer = new Timer(1/20, this, true);
+                        this.start();
+                    }
+                    async start(){
+                        AssetsManager.loadAssets();
+                    }
+                    update(time){
+                        this.KeyboardAndMouse.fireEvents();
+                        this.SceneManager.update(time);
+                        this.SceneManager.draw(this.ctx);
+                        this.ctx.fillText("" + time, 0,16);
+                    }
+                }
+                window.Main = Main;
+            </script>
+        </xmp>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            SceneLoading JS
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <xmp>
+            <script>
+                import AssetsManager from './AssetsManager.js';
+                import KeyboardAndMouse from './KeyboardAndMouse.js';
+                export default class SceneLoading{
+                    constructor(manager){
+                        this.manager = manager;
+                        this.loading = 0;
+                        this.manager.eventManager.addSubscriber(this,[
+                            KeyboardAndMouse.Event.CLICK,
+                            KeyboardAndMouse.Event.MOUSEDOWN,
+                            KeyboardAndMouse.Event.KEYDOWN,
+                            KeyboardAndMouse.Event.TOUCH
+                        ]);
+                    }
+                    update(t){
+                        this.loading = AssetsManager.getLoadStatus();
+                    }
+                    draw(ctx){
+                        ctx.fillStyle = "#000000";
+                        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                        ctx.fillStyle = "#ffffff";
+                        if(this.loading < 100){
+                            let text = "LOADING " + ("" + this.loading).padStart(3, ' ') + "%";
+                            ctx.fillText( text, ctx.canvas.width / 2 - text.length * 4, ctx.canvas.height / 2);
+                        }
+                        else{
+                            let text = "LOADING COMPLETE";
+                            ctx.fillText(text, ctx.canvas.width / 2 - text.length * 4 , ctx.canvas.height / 2 );
+                        }
+                    }
+                    notify(e){
+                        if (this.loading > 99) {
+                            this.manager.toMainMenu();
+                        }
+                    }
+                }
+            </script>
+        </xmp>
+    </div>
+</div>
+
+<div class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            SceneMainMenu JS
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <xmp>
+            <script>
+                import KeyboardAndMouse from './KeyboardAndMouse.js';
+                export default class SceneMainMenu{
+                    constructor(manager){
+                        this.manager = manager;
+                        this.manager.eventManager.addSubscriber(this,[
+                            KeyboardAndMouse.Event.CLICK,
+                            KeyboardAndMouse.Event.MOUSEDOWN,
+                            KeyboardAndMouse.Event.KEYDOWN,
+                            KeyboardAndMouse.Event.TOUCH
+                        ]);
+                        this.loaded = {
+                            left : 0,
+                            right : GLOBAL.CANVAS.w,
+                            finished : false
+                        };
+                        this.lastTime = 0;
+                        this.menuItems = [
+                            "1 PLAYER",
+                            "2 PLAYERS",
+                            "HOW TO PLAY",
+                            "******==*****==*****==***",
+                        ];
+                        this.cursor = {
+                            t : ">>",
+                            x : 70,
+                            m : 0
+                        };
+                    }
+                    getBuffer(){
+                        this.canvas = document.createElement('canvas');
+                        this.canvas.width = GLOBAL.CANVAS.w;
+                        this.canvas.height = GLOBAL.CANVAS.h;
+                        this.ctx = this.canvas.getContext('2d');
+                        this.ctx.font = GLOBAL.CANVAS.font;
+                        this.ctx.fillStyle = "#000000";
+                        this.ctx.fillRect(0, 0, GLOBAL.CANVAS.w, GLOBAL.CANVAS.h);
+                        this.ctx.fillStyle = "#ffffff";
+                        for(let i = 0 ; i < this.menuItems.length;i++){
+                            this.ctx.fillText(this.menuItems[i] , 100   , GLOBAL.CANVAS.h / 2 + 16 * i);
+                        }
+                        this.ctx.fillText( this.cursor.t , this.cursor.x   , GLOBAL.CANVAS.h / 2 + 16 * this.cursor.m);
+                        return this.canvas;
+                    }
+                    update(t){
+                        if(this.loaded.finished == false){
+                            this.lastTime = t;
+                            this.loaded.left += 4;
+                            this.loaded.right -= 4;
+                            if(this.loaded.left >= this.loaded.right){
+                                this.loaded.finished = true;
+                            }
+                        }
+                    }
+                    draw(ctx){
+                        ctx.clearRect(0, 0, GLOBAL.CANVAS.w, GLOBAL.CANVAS.h);
+                        let buffer = this.getBuffer();
+                        ctx.drawImage(buffer,
+                            0,0,
+                            buffer.width/2,
+                            buffer.height,
+                            this.loaded.left - buffer.width/2,0,
+                            buffer.width/2,
+                            buffer.height
+                            );
+                        ctx.drawImage(buffer,
+                            buffer.width/2,0,
+                            buffer.width/2,
+                            buffer.height,
+                            this.loaded.right,0,
+                            buffer.width/2,
+                            buffer.height
+                            );
+                    }
+                    notify(e){
+                        if(e.name == KeyboardAndMouse.Event.KEYDOWN && e.event == KeyboardAndMouse.key.DOWN){
+                            this.cursor.m++;
+                            this.cursor.m = this.cursor.m % this.menuItems.length;
+                        }
+                        else if(e.name == KeyboardAndMouse.Event.KEYDOWN && e.event == KeyboardAndMouse.key.UP){
+                            this.cursor.m--;
+                            if(this.cursor.m < 0) this.cursor.m = this.menuItems.length-1;
+                        }
+                        else{
+                            console.log(e);
+                        }
+                    }
+                }
             </script>
         </xmp>
     </div>

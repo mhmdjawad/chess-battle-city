@@ -1,4 +1,16 @@
 let GLOBAL = {};
+
+GLOBAL.PIXELSIZE = 1;
+GLOBAL.TILESIZE = 16 * GLOBAL.PIXELSIZE;
+GLOBAL.GAMEBOARD = {
+    w : GLOBAL.TILESIZE * 20,
+    h : GLOBAL.TILESIZE * 20,
+};
+GLOBAL.CANVAS = {
+    w : GLOBAL.GAMEBOARD.w +  GLOBAL.TILESIZE * 6,
+    h : GLOBAL.GAMEBOARD.h,
+    font : "14px sans-serif"
+};
 GLOBAL.PROJECT_ASSETS = "Assets/";
 GLOBAL.JSON = {
     assets : GLOBAL.PROJECT_ASSETS+'json/assets-map.json',

@@ -10,3 +10,6 @@ html,body{
     text-align:center;
     background: #00072c;
 }
+canvas{
+    border:1px solid #fff;
+}

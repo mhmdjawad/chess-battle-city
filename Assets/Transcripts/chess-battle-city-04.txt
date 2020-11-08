@@ -1,0 +1,54 @@
+Welcome to EP04 of chess battle city in javascript...
+We will talk about scenes and how to manage them.
+
+our main objective in writing a nice code is delegating tasks,
+and lighten the load in the main...
+
+scene manager will be responsible on routing between scenes
+we will need to provide the event manager
+because other scenes will subscribe to events
+
+for this demo I have added 3 new files, the scene manager
+and two scenes loading and main menu
+I have also added a cute animation entry for the main menu
+and in the loading scene I halted until the user does something
+like mouse down or touch or key pressed...
+this is preparation to play a sound when loading the main menu later on...maybe
+
+regarding the loading scene, we will need to import the assets manager,
+to know the percentage of loaded assets...
+and the keyboard and mouse to handle events and subscribe
+
+so once all assets loaded, the message will switch form loading to LOADING COMPLETE
+
+
+and when user does interaction we will switch to the main menu scene
+
+in this scene we display the menu, for now it is just presented by writing text on the canvas but later we will make menu item class 
+
+the animation here is quite simple to implement but I intended it to explain these parameters in context draw image
+this function can take 2, 4, or 8 parameters [in addition to image
+if only 2, they are the x and y where the drawing of image will start, and it will draw it whole
+if 4, they are the x,y and width,height, where you will scale the image,still will be drawn as whole...
+however the 8 parameters, will be x,y,w,h -- x,y,w,h 
+first x,y,w,h will be used to crop the image x,y starting position w,h the width and height
+second x,y,w,h, will do as the 4 in second case...
+
+so what I did here is divide the buffer into 2 splices, left and right
+and get them closer to each other in the update function, but stop when they arrive
+
+and in the draw, I use the 8 parameter way to crop the image for left and right
+and to set position that I updated...
+
+
+this will be all for this episode.. 
+
+documentation https://pdemia.com/chess-battle-city/
+repository for the current project https://github.com/mhmdjawad/chess-battle-city
+facebook page for pdemia https://www.facebook.com/pdemia
+my facebook page https://www.facebook.com/mhmdjawadzd
+my instagram https://www.instagram.com/p/CHKVXSqALen/
+my linkedin https://www.linkedin.com/in/mhmdjawadzd/
+
+Till we meet again, take care, good night.
+Thanks for watching.
