@@ -9,6 +9,7 @@ class SYS{
             "EP01-SetUpAndTimer.html",
             "EP02-EventManager.html",
             "EP03-AssetsManager.html",
+            "EP04-Scenes.html",
         ];
     }
     static initializeSelectorWithTutorials(selector){

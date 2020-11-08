@@ -1,6 +1,5 @@
 Welcome to EP03 of chess battle city in javascript
 
-
 We will talk about assets and how to manage them,
 so among the assets you may have are the following
 images, sounds, and json files.
@@ -25,8 +24,8 @@ using img tag in html with src to actual image
 using img tag in html with src to base64 string representing an image
 using javascript, which is what we will use.
 *Loading json
-Loading json is very simple, we also have serveral methods, a very nice on is usig fetch
-fetch will take a url as parameter and return a promise, if we need to get the josn in it we will use .json, which is also a promise
+Loading json is very simple, we also have several methods, a very nice on is using fetch
+fetch will take a url as parameter and return a promise, if we need to get the json in it we will use .json, which is also a promise
 so we will create an async function that will make both of these, so we would have
 *Loading Audio
 new Audio("Assets/Sound/stage_start.ogg");
@@ -37,7 +36,7 @@ we will create new js file in the root of our scripts folder
 which we use to store all the config that we want and include it in the index.html, before main.js
 *AssetsManager.JS
 in addition to having the previously mentioned loader
-this class will help us in loading all the assets from the begining.
+this class will help us in loading all the assets from the beginning.
 all the images, all the sounds, all of json files
 easing the access to them though the rest of the js classes.
 
@@ -45,9 +44,13 @@ so to make it active we need to import it in the main.js file and fire its funct
 and we may access how much have been loaded though the getLoadStatus and control what happen when
 all the things have been loaded.
 
-this will be all for this episode.. thanks for watching.
+this will be all for this episode.. 
+documentation https://pdemia.com/chess-battle-city/
+repository for the current project https://github.com/mhmdjawad/chess-ba...
+facebook page for pdemia https://www.facebook.com/pdemia
+my facebook page https://www.facebook.com/mhmdjawadzd
+my instagram https://www.instagram.com/p/CHKVXSqALen/
+my linkedin https://www.linkedin.com/in/mhmdjawadzd/
 
-
-
-
-
+Till we meet again, take care, good night.
+Thanks for watching.
