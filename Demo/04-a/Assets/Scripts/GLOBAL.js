@@ -13,7 +13,7 @@ GLOBAL.CANVAS = {
 };
 GLOBAL.PROJECT_ASSETS = "Assets/";
 GLOBAL.JSON = {
-    assets : GLOBAL.PROJECT_ASSETS+'json/assets-map.json',
+    assets : GLOBAL.PROJECT_ASSETS+'Json/assets-map.json',
 }
 GLOBAL.SOUNDS = {
     stage_start:      GLOBAL.PROJECT_ASSETS + 'sound/stage_start.ogg',

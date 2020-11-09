@@ -1,7 +1,7 @@
 Chess Battle City tutorial Episode 4 [Scenes]
 
 introducing scene manager, loading scene, main menu scene
-with a cute animation a closing curtin for the main menu
+with a cute animation a closing curtain for the main menu
 
 EP 04 https://youtu.be/XTOALN1clo8 Scenes
 
