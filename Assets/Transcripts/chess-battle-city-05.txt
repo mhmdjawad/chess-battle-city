@@ -1,0 +1,78 @@
+Welcome to EP05 of chess battle city in javascript...
+We will talk about Sprites and how to manage them.
+
+
+let us take a look on what we will be able to do after this episode,
+in this demo I changed the loading scene to wait for sprites to load
+and in the main menu scene I used the loaded sprites 
+to make this boarder of bricks and these three words
+
+I could have made this title as an image and loaded it,
+but I wanted to make it possible to change it
+so now you can go ahead and write anything using bricks
+
+A sprite by definition is two-dimensional bitmap that is integrated into a larger scene.
+in our project the set of sprites that we need is not big at all,
+I have prepared a nice manager to handle all the assets and load them
+and make them easy to access.
+the idea is instead of having each sprite on a separate image,
+we will use a sprite sheet and crop stuff out of it.
+
+here I have prepared 4 images to load, and a single json file
+which contain all the needed information to crop all images.
+
+I tried to make an upgrade from the stuff I used in the game made,
+so I divided between sprites and fonts, and made it possible to access any.
+
+a brief about this SpriteManager, I have tested this code and found out that sometimes things go not as predicted, it is not optimal but we handle stuff...
+
+if we place the SpriteManager.load() in our game loop at the loading scene then we need to prevent calling the whole script several times,
+however, I am checking if assets were loaded,
+if so we check if we have already finished loading sprites.
+and another check to prevent parallel calls to this, consider it as a mutual exclusion.
+
+we load assets map from json files, and loop....
+
+if we have a font, then we use the global characters list to crop from the image,
+if we have entity sprite sheet, we iterate over its elements and crop each.
+
+I added handler to abort if an image was not found, but its is ok because we will try again and the loading scene will wait till we have our sprites loaded.
+
+so if any image was missing we will keep trying and program won't start, but we will know...
+
+in the scene loading here is what I added to load the sprites..
+in update we have SpriteManager.load() if we finished loading the assets.
+in display we handle if we are loading sprites and when we finish loading
+
+last thing in this episode is how to use the loaded sprites
+I made two examples on the font and the sprites
+using the brick font I printed CHESS BATTLE CITY
+and using the brick sprite I made a border for the main menu scene
+I also changed a bit in the main menu scene and items are now objects
+having call back function to navigate between scenes..
+
+this will be all for this episode.. 
+
+List of all episodes
+
+EP 00 https://youtu.be/kq8HtOJNfrE Introduction
+
+EP 01 https://youtu.be/QOMM8ke_ccU Timer
+
+EP 02 https://youtu.be/mRZYxZxmwBk Events
+
+EP 03 https://youtu.be/UbmQhJILhgM Assets
+
+EP 04 https://youtu.be/XTOALN1clo8 Scenes
+
+EP 05 https://youtu.be/sKyIdu82Zr0 Sprites
+
+documentation https://pdemia.com/chess-battle-city/
+repository for the current project https://github.com/mhmdjawad/chess-battle-city
+facebook page for pdemia https://www.facebook.com/pdemia
+my facebook page https://www.facebook.com/mhmdjawadzd
+my instagram https://www.instagram.com/p/CHKVXSqALen/
+my linkedin https://www.linkedin.com/in/mhmdjawadzd/
+
+Till we meet again, take care, good night.
+Thanks for watching.

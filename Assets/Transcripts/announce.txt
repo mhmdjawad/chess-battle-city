@@ -1,9 +1,9 @@
-Chess Battle City tutorial Episode 4 [Scenes]
+Chess Battle City tutorial Episode 5 [Sprites]
 
-introducing scene manager, loading scene, main menu scene
-with a cute animation a closing curtain for the main menu
+introducing Sprite Manager, 
+how to load sprites to project and how to use them
 
-EP 04 https://youtu.be/XTOALN1clo8 Scenes
+EP 05 https://youtu.be/sKyIdu82Zr0 Sprites
 
 check demo and documentation about it at
 https://pdemia.com/chess-battle-city
@@ -21,6 +21,8 @@ EP 02 https://youtu.be/mRZYxZxmwBk Events
 EP 03 https://youtu.be/UbmQhJILhgM Assets
 
 EP 04 https://youtu.be/XTOALN1clo8 Scenes
+
+EP 05 https://youtu.be/sKyIdu82Zr0 Sprites
 
 hope you enjoy. have a nice day
 
