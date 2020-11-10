@@ -1,3 +1,4 @@
+Pdemia Chess Battle City in JavaScript Ep 05 Sprites
 Welcome to EP05 of chess battle city in javascript...
 We will talk about Sprites and how to manage them.
 

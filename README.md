@@ -5,6 +5,13 @@ Pdemia Project : chess-battle-city, a chess using tanks game in javascript canva
 
 ### YouTube Tutorials ###
 * [YouTube Tutorial Ep00](https://youtu.be/kq8HtOJNfrE)
+
 * [YouTube Tutorial Ep01](https://youtu.be/QOMM8ke_ccU)
+
 * [YouTube Tutorial Ep02](https://youtu.be/mRZYxZxmwBk)
+
 * [YouTube Tutorial Ep03](https://youtu.be/UbmQhJILhgM)
+
+* [YouTube Tutorial Ep04](https://youtu.be/XTOALN1clo8)
+
+* [YouTube Tutorial Ep05](https://youtu.be/sKyIdu82Zr0)
