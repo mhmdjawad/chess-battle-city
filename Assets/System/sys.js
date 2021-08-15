@@ -1,16 +1,16 @@
 class SYS{
-
     static getLocationOfTutorials(){
         return "Assets/Tutorials/";
     }
     static getListOfTutorials(){
         return [
-            "EP00-Introduction.html",
-            "EP01-SetUpAndTimer.html",
-            "EP02-EventManager.html",
-            "EP03-AssetsManager.html",
-            "EP04-Scenes.html",
+            "EP06-Entities.html",
             "EP05-Sprites.html",
+            "EP04-Scenes.html",
+            "EP03-AssetsManager.html",
+            "EP02-EventManager.html",
+            "EP01-SetUpAndTimer.html",
+            "EP00-Introduction.html",
         ];
     }
     static initializeSelectorWithTutorials(selector){
@@ -27,14 +27,12 @@ class SYS{
         });
         $(selector).parent().parent().find(".btn").on('click',SYS.loadTutorial);
     }
-
     static async loadTutorial(){
         let url = SYS.getLocationOfTutorials() + $(SYS.selector).val();
         const r = await fetch(url);
         const d = await r.text();
         $(SYS.target).html(d);
     }
-
     static ToggleSeePart(that){
         let currentlyView = $(that).attr("view");
         if(currentlyView === "y"){

@@ -1,0 +1,397 @@
+<h3>Ep 06 -- Game Entities</h3>
+
+<div title="Demo" class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="y" >
+            <i class="fa fa-arrow-right"></i>
+        </a>
+        <span class="part-header-title">
+            Demo
+        </span>
+    </div>
+    <div class="part_body" style="text-align:center">
+        <img src="Assets/Images/cover-06.png" alt="">
+        <h4>Demo 06 <a class="btn btn-info" href="Demo/06/index.html" target="_blank"> open </a> </h4>
+        <iframe src="Demo/06/index.html" resize=resize width="100%" height="380px" frameborder="0"></iframe>
+    </div>
+</div>
+
+<div title="DIRECTION and ROTATION" class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            DIRECTION and ROTATION
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <xmp>
+            <script>
+                const DIRECTION = {
+                    UP              : Symbol("UP"),             //Rotation 0
+                    UPRIGHT         : Symbol("UPRIGHT"),        //Rotation 1
+                    RIGHT           : Symbol("RIGHT"),          //Rotation 2
+                    DOWNRIGHT       : Symbol("DOWNRIGHT"),      //Rotation 3
+                    DOWN            : Symbol("DOWN"),           //Rotation 4
+                    DOWNLEFT        : Symbol("DOWNLEFT"),       //Rotation 5
+                    LEFT            : Symbol("LEFT"),           //Rotation 6       
+                    UPLEFT          : Symbol("UPLEFT"),         //Rotation 7
+                }
+
+                function getDirection(rotation){
+                    rotation = rotation % 7;
+                    switch(rotation){
+                        case 0 : return DIRECTION.UP;
+                        case 1 : return DIRECTION.UPRIGHT;
+                        case 2 : return DIRECTION.RIGHT;
+                        case 3 : return DIRECTION.DOWNRIGHT;
+                        case 4 : return DIRECTION.DOWN;
+                        case 5 : return DIRECTION.DOWNLEFT;
+                        case 6 : return DIRECTION.LEFT;
+                        case 7 : return DIRECTION.UPLEFT;
+                    }
+                }
+            </script>
+        </xmp>
+    </div>
+</div>
+
+<div title="Point" class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Point Js
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>in a 2d plan, we only need x and y to locate something</p>
+        <xmp>
+            constructor(x,y){
+                this.x = x;
+                this.y = y;
+            }
+        </xmp>
+        <p>in this class I have added a few helper stuff that we may find handy later</p>
+        <h4>Distance to another point</h4>
+        <p>well as we all know, if we passed 4th grade, 
+            this is how you get a distance between two points</p>
+        <xmp>
+            distanceTo(another){
+                let x1 = this.x;
+                let y1 = this.y;
+                let x2 = another.x;
+                let y2 = another.y;
+                if(x1 == x2 && y1 == y2) return 0;
+                else if(x1 == x2) return Math.abs(y1-y2);
+                else if(y1 == y2) return Math.abs(x1-x2);
+                else{
+                    let distance = 0;
+                    distance += Math.pow((x1 - x2), 2);
+                    distance += Math.pow((y1 - y2), 2);
+                    distance = Math.sqrt(distance);
+                    return distance;
+                }
+            }
+        </xmp>
+        <h4>Moving point</h4>
+        <p>in chess, we have 8 possible directions we could move </p>
+        <xmp>
+            move(direction,distance){
+                if(direction == DIRECTION.UP){
+                    this.y -= distance;
+                }
+                else if(direction == DIRECTION.DOWN){
+                    this.y += distance;
+                }
+                else if(direction == DIRECTION.LEFT){
+                    this.x -= distance;
+                }
+                else if(direction == DIRECTION.RIGHT){
+                    this.x += distance;
+                }
+                else if(direction == DIRECTION.UPLEFT){
+                    this.y -= distance;
+                    this.x -= distance;
+                }
+                else if(direction == DIRECTION.UPRIGHT){
+                    this.y -= distance;
+                    this.x += distance;
+                }
+                else if(direction == DIRECTION.DOWNRIGHT){
+                    this.y += distance;
+                    this.x += distance;
+                }
+                else if(direction == DIRECTION.DOWNLEFT){
+                    this.y += distance;
+                    this.x -= distance;
+                }
+            }
+        </xmp>
+        <h4>Rotate toward another point</h4>
+        <p>if we are at location and want to get what is the rotation to antoher , then we do this</p>
+        <xmp>
+            getRotationTo(another){
+                let x1 = this.x;
+                let y1 = this.y;
+                let x2 = another.x;
+                let y2 = another.y;
+                if(x1 == x2 && y1 == y2) return 0;
+                else if(x1 == x2 && y1 > y2) return 0;  //moving up
+                else if(y1 == y2 && x1 < x2) return 2;  //moving right
+                else if(x1 == x2 && y1 < y2) return 4;  //moving down
+                else if(y1 == y2 && x1 > x2) return 6;  //moving left             
+                else if(x1 < x2  && y1 > y2) return 1;  //moving up right
+                else if(x1 < x2  && y1 < y2) return 3;  //moving down right
+                else if(x1 > x2  && y1 < y2) return 5;  //moving down left
+                else if(x1 > x2  && y1 > y2) return 7;  //moving up left
+                return 0;
+            }
+        </xmp>
+
+        <h4>Clone</h4>
+        <p>this may seem silly at first, 
+            but if we alter the clone (move it), 
+            the origin remain the same,
+            wich is helpful
+        </p>
+        <xmp>
+            clone(){
+                return new Point(this.x,this.y);
+            }
+        </xmp>
+
+        <p>read the js file Point.js for more</p>
+    </div>
+</div>
+
+<div title="rectangle" class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Rectange Js
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>
+            a rectangle is a 2d shape with 4 vertices, 
+            enough to contain our sprite image, and a good blueprint for our entity class
+        </p>
+        <h4>constructor</h4>
+        <p>I will be using the center as Point, and drawing will actually begin from top</p>
+        <p>But I found it more logical to instead of having the x,y of something as top, 
+            we have x,y of center</p>
+        <xmp>
+            constructor(center,width,height,container){
+                this.container  =   container;
+                this.center     =   center  || new Point(0,0);
+                this.width      =   width   || 0;
+                this.height     =   height  || 0;
+                this.rotation   =   0;
+            }
+        </xmp>
+        <h4>Rotate</h4>
+        <p>a very strong use of this class is ability to use one image (sprite) as 8</p>
+        <p>we only have a sigle direction for tank in our sheet, 
+            but we can rotate it to have 8 possible other images
+            rotate across the diagonal cause some cropping but I'll think about something later
+        </p>
+        <xmp>
+            rotate(image,times,passed = 0){
+                if(times <= 0) return image;
+                if(times >= 8) times -= 8;
+                if(times < 0) times += 8;
+                let buffer = document.createElement('canvas');
+                buffer.width = this.width;
+                buffer.height = this.height;
+                let context = buffer.getContext('2d');
+                if(times % 2 == 0){
+                    context.setTransform(0,1,-1,0,image.width,0);
+                    context.drawImage(image,0,0);
+                    context.setTransform(1,0,0,1,0,0);
+                    return this.rotate(buffer,times-2,passed+2);
+                }
+                else if(times == 0.5){
+                    context.rotate(Math.PI/8);
+                    context.drawImage(image,8,-16);
+                    return this.rotate(buffer,times-1,passed++);
+                }
+                else{
+                    context.rotate(Math.PI/4);
+                    context.drawImage(image,8,-16);
+                    return this.rotate(buffer,times-1,passed++);
+                }
+            }
+        </xmp>
+        <p>check rest of rectange methods in code</p>
+    </div>
+</div>
+
+<div title="Entity" class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Entity
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <p>Entity is an extension of Rectange</p>
+        <xmp>class Entity extends Rectangle</xmp>
+        <h4>constructor</h4>
+        <p>a container is the scene where this entity will exist, 
+            the name is a placeholder for now to identify the entity later</p>
+        <p>an entity can have several images like tanks that have 2, and iterate between them when needed</p>
+        <p>
+            in our game, we have life for an entity, if this reach 0 we will destroy it
+            the armor will reduce damage to life, as game logic dicates
+        </p>
+        <xmp>
+            constructor(container, name){
+                super();
+                this.container = container;
+                this.name = name;
+                this.currentImage = 0;
+                this.images = [];
+                this.isDestroyed = false;
+                this.life = 100;
+                this.armor = 0;
+            }
+        </xmp>
+        <h4>reduce life</h4>
+        <p>a bullet will cause this to happen, or maybe a mine, who knows..</p>
+        <xmp>
+            reduceLife(amount){
+                amount -= this.armor;
+                this.life -= amount;
+                if(this.life <= 0) this.isDestroyed = true;
+            }
+        </xmp>
+        <h4>gain life</h4>
+        <p>I wanted this to be like a possiblity to make wall repairs or fix tanks</p>
+        <xmp>
+            gainLife(amount){
+                this.life += amount;
+            }
+        </xmp>
+
+        <h4>Draw Entity</h4>
+        <p>as mentioned before we have several images per entity and we iterate</p>
+        <p>the draw will draw the image sutable for the direction and current image</p>
+        <xmp>
+            getCurrentImage(){
+                return SpriteManager.getSprite(this.images[this.currentImage]);
+            }
+        
+            draw(ctx){
+                let image = this.getCurrentImage();
+                image = this.rotate(image,this.rotation);
+                ctx.drawImage(image,
+                    this.center.x - this.width/2,
+                    this.center.y - this.height/2
+                );
+            }
+        </xmp>
+
+    </div>
+</div>
+
+<div title="Tank" class="container part_container">
+    <div class="part_header">
+        <a class="btn btn-primary part-header-view-hide" onclick="SYS.ToggleSeePart(this)" view="n" >
+            <i class="fa fa-arrow-down"></i>
+        </a>
+        <span class="part-header-title">
+            Tank
+        </span>
+    </div>
+    <div class="part_body" style="display: none;">
+        <h4>Tank is and Entity</h4>
+        <xmp>
+            constructor(container, team, level, name = "tank"){
+                super(container,name);
+                this.team = team;
+                this.level = level;
+                this.images.push(`tank-${team}-${level}-1`);
+                this.images.push(`tank-${team}-${level}-2`);
+                this.size = GLOBAL.TILESIZE * 2;
+                this.width = this.height = GLOBAL.TILESIZE * 2;
+                this.speed = 4;
+                this.bulletLimit = 2;
+                this.life = level * 100;
+                this.destination = this.center;
+                this.latestDestination = this.destination;
+                this.velocityX = 0;
+                this.velocityY = 0;
+                this.commands = [];
+                this.bullets = [];
+                this.isWaiting = false;
+                this.waitUnill = 0;
+                this.possiblemoves = [];
+            }
+        </xmp>
+        <h4>Location</h4>
+        <xmp>
+            setPosition(point){
+                this.center = this.destination = this.latestDestination = point;
+            }
+            moveTo(point,force = true){
+                if(!force){
+                    let possiblemoves = this.getPossibleMoves();
+                    for(let i = 0; i < possiblemoves.length;i++){
+                        if(possiblemoves[i].is(point)){
+                            this.destination = point;
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                else{
+                    this.destination = point;
+                    return true;
+                }
+            }
+        </xmp>
+
+        <h4>Update .. move ? or do ? </h4>
+        <xmp>
+            update(time){
+                if(this.isWaiting){
+                    if(time >= this.waitUnill){
+                        this.isWaiting = false;
+                    }
+                    else{return;}
+                }
+                let toX = this.destination.x;
+                let toY = this.destination.y;
+                if(this.center.x == toX && this.center.y == toY){
+                    this.velocityX = 0;
+                    this.velocityY = 0;
+                }
+                else{
+                    this.rotation = this.center.getRotationTo(this.destination);
+                    this.currentImage++;
+                    this.currentImage = this.currentImage % this.images.length;
+                    if(this.center.x != toX){
+                        this.velocityX = (this.center.x > toX) ? -this.speed : this.speed;
+                        this.center.x += this.velocityX;
+                    }
+                    if(this.center.y != toY){
+                        this.velocityY = (this.center.y > toY) ? -this.speed : this.speed;
+                        this.center.y += this.velocityY;
+                    }
+                }
+                this.handleCommands(time);
+            }
+        </xmp>
+    </div>
+</div>
+
+<div title="thanks" class="container part_container" style="text-align: center;">
+    <h4>THANKS FOR READING</h4>
+</div>

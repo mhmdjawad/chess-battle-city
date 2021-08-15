@@ -13,6 +13,9 @@
     --cursor : #00ffdc30;
 
     --bord-overlay : #e3ff5b75;
+
+
+    --grey_bg : #4c4c4c;
 }
 *{
     border-collapse: collapse;
